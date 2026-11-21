@@ -1,0 +1,579 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CICI Anonymous | Freedom Wall</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    color:white;
+    font-family:'DM Sans',sans-serif;
+    background:
+    radial-gradient(ellipse at 10% 10%,rgba(15,130,210,.25),transparent 40%),
+    radial-gradient(ellipse at 90% 80%,rgba(65,190,240,.15),transparent 40%),
+    linear-gradient(135deg,#07152e,#0b2447 55%,#07152e);
+    overflow-x:hidden;
+}
+
+header{
+    padding:17px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.13);
+    background:rgba(7,21,46,.75);
+    backdrop-filter:blur(20px);
+    position:sticky;
+    top:0;
+    z-index:5;
+}
+
+.brand{font:800 21px 'Outfit',sans-serif}
+.brand span{color:#52d5f5}
+
+.home-link{
+    color:#a8eaff;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+    padding:10px 16px;
+    border:1px solid rgba(82,213,245,.25);
+    border-radius:9px;
+    background:rgba(82,213,245,.07);
+    transition:.2s;
+}
+
+.home-link:hover{background:rgba(82,213,245,.17)}
+
+.hero{
+    text-align:center;
+    padding:65px 20px 35px;
+}
+
+.eyebrow{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:30px;
+    border:1px solid rgba(82,213,245,.3);
+    background:rgba(82,213,245,.08);
+    color:#8be5ff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    margin-bottom:20px;
+}
+
+h1{
+    font:800 clamp(38px,7vw,65px)/1.1 'Outfit',sans-serif;
+    letter-spacing:-2px;
+}
+
+h1 span{
+    background:linear-gradient(90deg,#55d6f4,#8ecfff,#e4ce65);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:550px;
+    margin:17px auto;
+    color:#a8bad2;
+    font-size:14px;
+    line-height:1.8;
+}
+
+.wall-status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+    color:#9cb4ce;
+    font-size:11px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    background:#5ce0ae;
+    border-radius:50%;
+    box-shadow:0 0 10px #5ce0ae;
+}
+
+.wall-label{
+    max-width:1100px;
+    width:calc(100% - 36px);
+    margin:0 auto 14px;
+    display:flex;
+    justify-content:space-between;
+    color:#9bb5d1;
+    font-size:10px;
+    letter-spacing:1px;
+    font-weight:700;
+}
+
+.wall-label span:last-child{color:#6ecff0}
+
+.ticker-shell{
+    overflow:hidden;
+    width:100%;
+    padding:18px 0 30px;
+    mask-image:linear-gradient(90deg,transparent,black 5%,black 95%,transparent);
+    -webkit-mask-image:linear-gradient(90deg,transparent,black 5%,black 95%,transparent);
+}
+
+.ticker-track{
+    display:flex;
+    width:max-content;
+    gap:18px;
+    animation:scrollWall 55s linear infinite;
+}
+
+.ticker-shell:hover .ticker-track{
+    animation-play-state:paused;
+}
+
+@keyframes scrollWall{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+}
+
+.ticker-card{
+    width:300px;
+    min-height:190px;
+    padding:21px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.15);
+    background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.045));
+    backdrop-filter:blur(18px);
+    box-shadow:0 15px 40px rgba(0,0,0,.16);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    cursor:pointer;
+    text-align:left;
+    color:white;
+    transition:.3s;
+    animation:floatCard 4s ease-in-out infinite alternate;
+}
+
+.ticker-card:nth-child(even){animation-delay:-2s}
+
+.ticker-card:hover{
+    border-color:#52d5f5;
+    box-shadow:0 0 30px rgba(82,213,245,.2);
+    transform:translateY(-8px) scale(1.025);
+}
+
+@keyframes floatCard{
+    to{translate:0 -7px}
+}
+
+.card-top{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#8be5ff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.card-icon{
+    width:29px;
+    height:29px;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+    background:rgba(82,213,245,.12);
+    color:#75def8;
+    font-size:15px;
+}
+
+.card-message{
+    color:#e5f0fb;
+    font-size:14px;
+    line-height:1.7;
+    margin:15px 0;
+    overflow-wrap:anywhere;
+}
+
+.card-date{
+    font-size:10px;
+    color:#8097b3;
+}
+
+.pause-hint{
+    text-align:center;
+    color:#7f9bb9;
+    font-size:10px;
+    margin-top:-5px;
+}
+
+/* Popup */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:20;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(1,8,22,.78);
+    backdrop-filter:blur(10px);
+}
+
+.modal.show{
+    display:flex;
+    animation:fadeIn .2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+.modal-box{
+    position:relative;
+    width:min(520px,100%);
+    padding:30px;
+    border-radius:22px;
+    border:1px solid rgba(82,213,245,.3);
+    background:linear-gradient(145deg,#102d50,#091b35);
+    box-shadow:0 25px 90px rgba(0,0,0,.5);
+    animation:pop .25s ease;
+    max-height:90vh;
+    overflow-y:auto;
+}
+
+@keyframes pop{
+    from{transform:scale(.93) translateY(12px);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+.close{
+    position:absolute;
+    right:17px;
+    top:15px;
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.07);
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.modal-tag{
+    color:#7de0ff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    margin-bottom:20px;
+}
+
+.modal-message{
+    font:500 19px/1.7 'Outfit',sans-serif;
+    color:#edf7ff;
+    overflow-wrap:anywhere;
+    white-space:pre-wrap;
+}
+
+.modal-date{
+    font-size:11px;
+    color:#8da6c3;
+    margin-top:20px;
+}
+
+.modal-divider{
+    height:1px;
+    background:rgba(255,255,255,.12);
+    margin:23px 0;
+}
+
+.report-title{
+    font:700 14px 'Outfit',sans-serif;
+    margin-bottom:10px;
+}
+
+.report-description{
+    color:#9db2cc;
+    font-size:11px;
+    line-height:1.6;
+    margin-bottom:13px;
+}
+
+.report-form{
+    display:flex;
+    gap:10px;
+    flex-direction:column;
+}
+
+.report-form select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.14);
+    background:#102746;
+    color:#dceafa;
+    outline:none;
+    font:12px 'DM Sans',sans-serif;
+}
+
+.report-form select option{background:#102746}
+
+.report-button{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    background:rgba(255,100,100,.1);
+    border:1px solid rgba(255,130,130,.3);
+    color:#ffb2b2;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.report-button:hover{background:rgba(255,100,100,.2)}
+
+.cancel{
+    display:block;
+    text-align:center;
+    color:#91a9c4;
+    font-size:11px;
+    margin-top:14px;
+    cursor:pointer;
+    background:none;
+    border:0;
+    width:100%;
+}
+
+.alert{
+    width:min(700px,calc(100% - 36px));
+    margin:0 auto 20px;
+    padding:13px 16px;
+    background:rgba(82,213,245,.1);
+    border:1px solid rgba(82,213,245,.25);
+    color:#b5edff;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.empty{
+    width:min(700px,calc(100% - 36px));
+    margin:30px auto;
+    padding:55px 20px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.05);
+    border-radius:18px;
+}
+
+.empty h2{
+    font:700 20px 'Outfit',sans-serif;
+    margin-bottom:9px;
+}
+
+.empty p{
+    font-size:12px;
+    color:#9db2cc;
+}
+
+footer{
+    text-align:center;
+    padding:27px 15px;
+    border-top:1px solid rgba(255,255,255,.1);
+    color:#8097b3;
+    font-size:11px;
+    margin-top:70px;
+}
+
+footer span{color:#52d5f5}
+
+@media(max-width:600px){
+    header{padding:15px 18px}
+    .brand{font-size:17px}
+    .home-link{font-size:10px;padding:9px 11px}
+    .hero{padding:50px 18px 30px}
+    h1{letter-spacing:-1px}
+    .ticker-card{width:270px}
+    .modal-box{padding:25px 20px}
+    .modal-message{font-size:17px}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .ticker-track,.ticker-card{animation:none!important}
+    *,*::before,*::after{transition:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">CICI <span>Anonymous</span></div>
+    <a href="{% url 'home' %}" class="home-link">← Back to Home</a>
+</header>
+
+<section class="hero">
+    <div class="eyebrow">✦ THE COMMUNITY SPACE</div>
+    <h1>The <span>Freedom Wall.</span></h1>
+    <p>
+        Every thought has a story. Every confession deserves a voice.
+        Click a confession to read more.
+    </p>
+    <div class="wall-status">
+        <span class="dot"></span>
+        COMMUNITY WALL IS LIVE
+    </div>
+</section>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+{% if posts %}
+<section>
+    <div class="wall-label">
+        <span>✦ CONFESSIONS IN MOTION</span>
+        <span>CLICK A CARD TO EXPLORE</span>
+    </div>
+
+    <div class="ticker-shell">
+        <div class="ticker-track">
+
+            {% for post in posts %}
+            <button type="button" class="ticker-card"
+                data-post-id="{{ post.id }}"
+                data-message="{{ post.message }}"
+                data-date="{{ post.created_at|date:'M d, Y · h:i A' }}"
+                onclick="openModal(this)">
+                <div>
+                    <div class="card-top">
+                        <span class="card-icon">✦</span>
+                        COMMUNITY CONFESSION
+                    </div>
+                    <div class="card-message">{{ post.message|truncatechars:115 }}</div>
+                </div>
+                <div class="card-date">
+                    {{ post.created_at|date:"M d, Y · h:i A" }} · Click to read
+                </div>
+            </button>
+            {% endfor %}
+
+            {% for post in posts %}
+            <div class="ticker-card" aria-hidden="true">
+                <div>
+                    <div class="card-top">
+                        <span class="card-icon">✦</span>
+                        COMMUNITY CONFESSION
+                    </div>
+                    <div class="card-message">{{ post.message|truncatechars:115 }}</div>
+                </div>
+                <div class="card-date">
+                    {{ post.created_at|date:"M d, Y · h:i A" }}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <p class="pause-hint">
+        Hover to pause · Click a confession to read it
+    </p>
+</section>
+
+{% else %}
+<div class="empty">
+    <h2>The wall is waiting for a story.</h2>
+    <p>No approved confessions yet. Be the first to share yours!</p>
+</div>
+{% endif %}
+
+<!-- CONFESSION MODAL -->
+
+<div class="modal" id="confessionModal" role="dialog" aria-modal="true" onclick="outsideClose(event)">
+    <div class="modal-box">
+        <button class="close" type="button" onclick="closeModal()" aria-label="Close">×</button>
+
+        <div class="modal-tag">✦ ANONYMOUS CONFESSION</div>
+        <div class="modal-message" id="modalMessage"></div>
+        <div class="modal-date" id="modalDate"></div>
+
+        <div class="modal-divider"></div>
+
+        <h3 class="report-title">Something inappropriate?</h3>
+        <p class="report-description">
+            Help keep the Freedom Wall safe. You can report this confession for moderator review.
+        </p>
+
+        <form method="POST" id="reportForm" class="report-form"
+              onsubmit="return confirm('Are you sure you want to report this confession?');">
+            {% csrf_token %}
+            <select name="reason" required>
+                <option value="">Select a reason for reporting...</option>
+                <option value="Harassment or bullying">Harassment or bullying</option>
+                <option value="Inappropriate content">Inappropriate content</option>
+                <option value="Personal information">Personal information</option>
+                <option value="Threats or harmful content">Threats or harmful content</option>
+                <option value="Other">Other</option>
+            </select>
+            <button type="submit" class="report-button">⚑ Report Confession</button>
+        </form>
+
+        <button type="button" class="cancel" onclick="closeModal()">Close confession</button>
+    </div>
+</div>
+
+<footer>
+    CICI Anonymous · <span>Share responsibly. Respect everyone.</span>
+</footer>
+
+<script>
+const modal = document.getElementById('confessionModal');
+const modalMessage = document.getElementById('modalMessage');
+const modalDate = document.getElementById('modalDate');
+const reportForm = document.getElementById('reportForm');
+
+function openModal(card) {
+    const message = card.dataset.message;
+    const date = card.dataset.date;
+    const postId = card.dataset.postId;
+
+    modalMessage.textContent = message;
+    modalDate.textContent = date;
+    reportForm.action = `/report/${postId}/`;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+function outsideClose(event) {
+    if (event.target === modal) closeModal();
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
